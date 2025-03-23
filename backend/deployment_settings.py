@@ -61,53 +61,20 @@ DATABASES = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'formatters': {
-        'verbose': {
-            'format': '[contactor] %(levelname)s %(asctime)s %(message)s'
-        },
-    },
     'handlers': {
-        # Send all messages to console
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-        },
-        # Send info messages to syslog
-        'syslog':{
-            'level':'INFO',
-            'class': 'logging.handlers.SysLogHandler',
-            'facility': SysLogHandler.LOG_LOCAL2,
-            'address': '/dev/log',
-            'formatter': 'verbose',
-        },
-        # Warning messages are sent to admin emails
         'mail_admins': {
-            'level': 'WARNING',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler',
-        },
-        # critical errors are logged to sentry
-        'sentry': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'raven.contrib.django.handlers.SentryHandler',
+            'class': 'django.utils.log.AdminEmailHandler',
         },
     },
     'loggers': {
-        # This is the "catch all" logger
-        '': {
-            'handlers': ['console', 'syslog', 'mail_admins', 'sentry'],
-            'level': 'DEBUG',
-            'propagate': False,
+        'django': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
         },
-    }
+    },
 }
-
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
