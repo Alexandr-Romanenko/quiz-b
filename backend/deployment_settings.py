@@ -22,7 +22,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'https://render-deploy-tutorial-reactjs-code.onrender.com'
+    'https://quiz-f-5nlr.onrender.com'
 ]
 
 STORAGES = {
